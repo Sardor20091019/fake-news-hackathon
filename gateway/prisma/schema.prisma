@@ -1,0 +1,21 @@
+generator client {
+provider = "prisma-client-js"
+}
+
+datasource db {
+provider = "sqlite"
+url      = "file:./dev.db"
+}
+
+model AnalysisCache {
+id          String   @id @default(uuid())
+hash        String   @unique
+url         String?
+content     String
+score       Float
+category    String
+explanation String
+highlights  String   // Stored as JSON String
+metadata    String   // Stored as JSON String
+createdAt   DateTime @default(now())
+}

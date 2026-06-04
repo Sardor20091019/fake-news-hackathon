@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>dashboard</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+<script>
+async function executeVerification() {
+    // 1. Get the text from your textarea/input
+    // Make sure 'articleInput' matches the ID of your text box
+    const articleText = document.getElementById('articleInput').value; 
+    
+    // 2. Target the UI elements where the results will go
+    const trustScoreElement = document.getElementById('trustScore'); // The number (e.g., 82)
+    const aiSummaryElement = document.getElementById('aiSummary');   // The "AI FACT-CHECK SUMMARY" box
+    const verdictElement = document.getElementById('verdict');     // The text that says "VERIFIED" or "DEBUNKED"
+
+    // Set a loading state so it looks like the AI is working
+    aiSummaryElement.innerText = "Sovereign AI is researching real-world facts...";
+    aiSummaryElement.style.color = "#ffbf00"; // Set to your amber/gold color
+
+    try {
+        const response = await fetch('http://localhost:8001/analyze', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ text: articleText }),
+        });
+
+        const data = await response.json();
+
+        // 3. UPDATE THE UI WITH THE BACKEND DATA
+        trustScoreElement.innerText = data.trust_score;
+        verdictElement.innerText = data.verdict;
+        
+        // This line is what makes the AI "Worth it"
+        aiSummaryElement.innerText = data.ai_research;
+
+        // Change color based on truth
+        if (data.verdict === "DEBUNKED") {
+            verdictElement.style.color = "#ff4444"; // Red for fake
+        } else {
+            verdictElement.style.color = "#00ff88"; // Green for real
+        }
+
+    } catch (error) {
+        console.error("Error:", error);
+        aiSummaryElement.innerText = "Failed to connect to the Sovereign Engine.";
+    }
+}
+</script>
+  </body>
+</html>

@@ -1,0 +1,12 @@
+fastapi
+uvicorn
+transformers
+torch
+spacy
+textstat
+vaderSentiment
+python-whois
+requests
+wikipedia-api
+google-genai
+python-dotenv
