@@ -81,14 +81,15 @@ async def run_gemini_audit(text: str) -> Optional[Dict[str, Any]]:
         return None
 
 # Placeholder functions for localized stylometrics and local databases
+# Update these return values in your backend/verify_engine.py
 def run_ml_classifier(text: str) -> Tuple[float, float]:
-    return 75.0, 85.0
+    return 45.0, 60.0 # Return a score instead of 75/85
 
 def analyze_stylometrics(text: str) -> Tuple[float, List[Any]]:
-    return 0.8, []
+    return 35.0, [] # Return a lower score for fake news stylometry
 
 def analyze_source_metadata(url: Optional[str]) -> Tuple[float, Dict[str, Any]]:
-    return 0.7, {}
+    return 20.0, {} # Low source credibility
 
 def verify_entities_locally(text: str) -> Tuple[float, List[Any], List[Any]]:
     return 0.8, [], []

@@ -3,40 +3,45 @@
 @tailwind utilities;
 
 :root {
-color-scheme: dark;
+/* Modern Cyber-Forensic Palette */
+--canvas: #030406;
+--surface: #0a0b0d;
+--panel: rgba(16, 18, 22, 0.95);
+
+/* Primary Accent: Adjust this to change the whole theme /
+--accent: 6 182 212; / Cyan-500 */
+
+--neon-glow: rgba(var(--accent), 0.15);
+--font-mono: 'JetBrains Mono', 'Fira Code', monospace;
 }
 
 body {
-margin: 0;
-background: radial-gradient(circle at top center, #1e293b 0%, #0f172a 100%);
+background-color: var(--canvas);
+color: #e2e8f0;
+font-family: 'Inter', system-ui, sans-serif;
 min-height: 100vh;
-overflow-x: hidden;
-font-family: sans-serif;
 }
 
-/* Custom Effects */
-.glow-blue {
-box-shadow: 0 0 20px rgba(37, 99, 235, 0.2);
+@layer components {
+/* Elevated Panel Design */
+.forensic-panel {
+@apply bg-[var(--panel)] border border-white/[0.08] shadow-[0_4px_20px_rgba(0,0,0,0.4)];
+backdrop-filter: blur(16px);
+border-radius: 1rem;
 }
 
-.glass-card {
-background: rgba(15, 23, 42, 0.6);
-backdrop-filter: blur(12px);
-border: 1px solid rgba(255, 255, 255, 0.05);
+/* Utility for subtle glowing text */
+.glow-text {
+text-shadow: 0 0 10px rgba(var(--accent), 0.5);
+}
 }
 
-/* Scanline Animation */
-.scanline {
-width: 100%;
-height: 2px;
-background: rgba(37, 99, 235, 0.3);
-position: absolute;
-animation: scan 3s linear infinite;
-z-index: 10;
+/* Add slight noise for a "printed" feel */
+body::before {
+content: "";
+position: fixed;
+inset: 0;
 pointer-events: none;
-}
-
-@keyframes scan {
-0% { top: 0%; }
-100% { top: 100%; }
+background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E");
+z-index: 100;
 }
