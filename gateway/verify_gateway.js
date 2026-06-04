@@ -9,8 +9,8 @@ dotenv.config();
 
 const app = express();
 const prisma = new PrismaClient();
-const PORT = 3006;
-const BACKEND_URL = 'http://127.0.0.1:8001/api/verify';
+const PORT = process.env.PORT || 3006;
+const BACKEND_URL = process.env.BACKEND_URL || 'http://127.0.0.1:8001/api/verify';
 
 app.use(cors({ origin: '*' }));
 app.use(express.json());
